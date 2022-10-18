@@ -1,0 +1,417 @@
+rpcbind (1.2.6-2) unstable; urgency=medium
+
+  * Upload to unstable
+  * Bump Standards-Version to 4.5.1. No changes required
+  * Bump debian/watch version to 4
+
+ -- Josue Ortega <josue@debian.org>  Tue, 17 Aug 2021 09:31:36 -0600
+
+rpcbind (1.2.6-1) experimental; urgency=medium
+
+  * New upstream release (1.2.6):
+    - Refresh debian/patches
+    - Remove pcinfo-Fix-stack-buffer-overflow.patch. Path has been
+      applied by upstream
+
+ -- Josue Ortega <josue@debian.org>  Fri, 25 Jun 2021 20:01:46 -0600
+
+rpcbind (1.2.5-9) unstable; urgency=medium
+
+  * Document -r has been added as a Debian extension.Thanks to Daniel
+    Shahaf <danielsh@apache.org> for the patch. (Closes: #948629)
+  * debian/rules: Enable debugging info with '--enable-debug'
+    configuration flag. Thanks to Petr Vorel <petr.vorel@gmail.com> for
+    the patch. (Closes: #963034)
+  * Bump debhelper-compat to use (= 13)
+  * debian/rules: Document Rulres-Requires-Root
+  * Add debian autopkgtest suite
+  * Bump Standards-Version to 4.5.0. No changes required
+
+ -- Josue Ortega <josue@debian.org>  Sun, 12 Jul 2020 19:22:37 -0600
+
+rpcbind (1.2.5-8) unstable; urgency=medium
+
+  * Remove --enable-rmtcalls configuration flag (Closes: #870579). Add
+    patch to activate remote calls at run-time
+  * Add README.debian
+
+ -- Josue Ortega <josue@debian.org>  Tue, 17 Sep 2019 21:36:01 -0600
+
+rpcbind (1.2.5-7) unstable; urgency=medium
+
+  * Enable remote calls using '--enable-rmtcalls' configuration flag.
+    Closes: #939877
+
+ -- Josue Ortega <josue@debian.org>  Mon, 09 Sep 2019 14:00:46 -0600
+
+rpcbind (1.2.5-6) unstable; urgency=medium
+
+  * debian/init.d: Restore retry at stop function to avoid racy restart
+    (Removed by mistake in previous revision)
+  * debian/rpcbind.socket: Remove Before=sockets.target directive
+
+ -- Josue Ortega <josue@debian.org>  Sun, 11 Aug 2019 17:21:39 -0600
+
+rpcbind (1.2.5-5) unstable; urgency=medium
+
+  * debian/rules: Add --no-restart-after-upgrade option to
+    dh_installsystemd to avoid race condition at rpcbind.socket
+    initialization (Closes: #933268)
+
+ -- Josue Ortega <josue@debian.org>  Mon, 05 Aug 2019 19:31:11 -0600
+
+rpcbind (1.2.5-4) unstable; urgency=medium
+
+  * debian/init.d: Add retry at stop function to avoid racy restart
+    (Closes: #804670)
+  * Add debian/rpcbind.default file. (Closes: #737276)
+  * Refresh debian/patches.
+  * Bump Standards-Version to 4.4.0. No changes required
+
+ -- Josue Ortega <josue@debian.org>  Sat, 27 Jul 2019 15:12:58 -0300
+
+rpcbind (1.2.5-3) unstable; urgency=medium
+
+  * Upload to unstable (1.2.5-3)
+
+ -- Josue Ortega <josue@debian.org>  Sun, 07 Jul 2019 14:08:33 -0600
+
+rpcbind (1.2.5-2) experimental; urgency=medium
+
+  * debian/control: Add Vcs-* fields.
+  * debian/init.d:
+    - Fix script to avoid the use of the command `stat` in case /usr is
+      not mounted (Closes: #912237). Thanks to
+      Allan Jensen <bugs@winge-jensen.dk> for the idea.
+    - Fix typo at init script (Closes: #920495).
+    - Add portmap to provides field (Closes: #920761).
+
+ -- Josue Ortega <josue@debian.org>  Sun, 14 Apr 2019 13:31:40 -0600
+
+rpcbind (1.2.5-1) experimental; urgency=medium
+
+  * New maintainer (Closes: #925033)
+  * debian/copyright: Update to use DEP-5 Format.
+  * Bump Standards-Version to 4.3.0, no changes were required.
+  * debian/postinst: Remove code check for code prepared prior to the
+    release of oldstable.
+  * debian/control:
+    - Update dependency on  debhelper to use debhelper-compat (=12).
+    - Add Pre-Depends field since maintainer script uses --skip-systemd-native
+      flag.
+
+ -- Josue Ortega <josue@debian.org>  Sat, 13 Apr 2019 13:17:49 -0600
+
+rpcbind (1.2.5-0.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/rpcbind.links: Create a compatibility symlink for rpcinfo from
+    /usr/bin to /usr/sbin, seems there are several things in the archive
+    expecting the binary to be in its previous location (Closes: #911510)
+
+ -- Laurent Bigonville <bigon@debian.org>  Mon, 22 Oct 2018 12:54:11 +0200
+
+rpcbind (1.2.5-0.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Upload to unstable
+  * debian/control: Downgrade priority to optional to match the override file
+
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 20 Oct 2018 14:18:44 +0200
+
+rpcbind (1.2.5-0.1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release (Closes: #867008)
+    - Bump libtirpc-dev build-dependency to >= 1.0.2
+    - d/p/07-Delete-the-unix-socket-only-if-we-have-created-it.patch,
+      d/p/CVE-2015-7236.patch: Dropped, merged upstream
+    - d/p/08-CVE-2017-8779.patch: Dropped, upstream fixed this in another way
+  * Run the daemon as "_rpc" user instead of as root (Closes: #852066)
+  * debian/control: Bump Standards-Version to 4.2.1 (no further changes)
+  * debian/rules: Switch to dh sequences
+  * debian/rpcbind.maintscript: Remove upstart init files
+  * Bump debhelper compatibility version to 11 (Closes: #831002)
+  * d/p/02-manpages.patch: Stop renaming rpcinfo.8 manpage to rpcinfo.7,
+    section 8 is for "System management commands" which seems to fit properly
+  * debian/rules: Enable all hardening as this is a network facing daemon
+  * d/p/rpcinfo-Fix-stack-buffer-overflow.patch: Fix stack buffer overflow,
+    cherry picked from upstream
+
+ -- Laurent Bigonville <bigon@debian.org>  Sun, 14 Oct 2018 16:30:59 +0200
+
+rpcbind (0.2.3-0.6) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * CVE-2017-8779: Memory leak when failing to parse XDR strings or bytearrays
+    (Closes: #861835)
+  * Bump runtime dependency on libtirpc1.
+    Bump Depends on libtirpc1 (>= 0.2.5-1.2~) to pull the fixes on libtirpc1
+    for CVE-2017-8779.
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Fri, 05 May 2017 19:46:00 +0200
+
+rpcbind (0.2.3-0.5) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Do not create empty /run/rpcbind/rpcbind.xdr or /run/rpcbind/portmap.xdr
+    files during startup if they don't exist, it makes the daemon generate a
+    warning.
+
+ -- Laurent Bigonville <bigon@debian.org>  Fri, 17 Jun 2016 17:54:02 +0200
+
+rpcbind (0.2.3-0.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/rcpbind.service: Add WantedBy=multi-user.target, this should ensure
+    that rpcbind daemon is started before nis (Closes: #805167, LP: #1558196)
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 31 May 2016 11:55:08 +0200
+
+rpcbind (0.2.3-0.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/control: Drop dependency on insserv | file-rc and versioned
+    dependency on initscripts package (Closes: #804937, #804980)
+  * debian/rcpbind.service: Add Before/Wants=rpcbind.target so the .target is
+    started as expected when rpcbind is available.
+  * debian/rpcbind.socket: Add "DefaultDependencies=no" so the socket is
+    available at really early boot (Closes: #806336, LP: #1580523)
+  * debian/init.d: Fix LSB init output (Closes: #823081)
+  * debian/rcpbind.service: Add a Documentation key
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 31 May 2016 09:34:59 +0200
+
+rpcbind (0.2.3-0.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/rpcbind.service: Set Type=notify and ask the daemon to not
+    daemonize itself, rpcbind daemon is calling sd_notify() when ready.
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 10 Nov 2015 17:07:03 +0100
+
+rpcbind (0.2.3-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New upstream release
+    - Enable systemd socket activation support (Closes: #679716)
+  * Override init.d-script-not-included-in-package and
+    init.d-script-not-marked-as-conffile lintian warnings/errors
+  * Add systemd and tmpfiles.d files (Closes: #748074)
+  * Add 07-Delete-the-unix-socket-only-if-we-have-created-it.patch: rpcbind
+    daemon shouldn't try to remove its socket if it as been socket activated
+  * Include some upstart jobs changes from Ubuntu (Closes: #747134)
+    - debian/rpcbind.rpcbind-boot.upstart: document that this job emits the
+      start-rpcbind event.
+    - Don't pass -w to rpcbind on boot up, since the files won't be there to
+      be read.
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 10 Nov 2015 13:36:12 +0100
+
+rpcbind (0.2.1-6.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Add CVE-2015-7236.patch patch.
+    CVE-2015-7236: Memory corruption in PMAP_CALLIT code leading to denial
+    of service. (Closes: #799307)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 23 Sep 2015 16:33:12 +0200
+
+rpcbind (0.2.1-6) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Fix "fails to upgrade from 'wheezy' - trying to overwrite
+    /usr/share/man/man8/rpcinfo.8.gz".
+    Breaks+Replaces: libc-bin (<< 2.16).
+    Don't depend on libc-bin (>= 2.16).
+    Closes: #734903.
+  * Remove debian/source/options.
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Mon, 18 Aug 2014 10:45:45 +0100
+
+rpcbind (0.2.1-5) experimental; urgency=medium
+
+  * Get rid of libgssglue1.
+    Build-depend on libtirpc-dev (>= 0.2.4-2~).
+    Depend on libtirpc1 (>= 0.2.4-2~).
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 02 Aug 2014 10:42:22 +0100
+
+rpcbind (0.2.1-4) unstable; urgency=medium
+
+  * Revert Roger Leigh's change to LSB initscript runlevels.
+    Closes: #739053.
+  * Refresh patches.
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 16 Jul 2014 04:05:27 +0100
+
+rpcbind (0.2.1-3) unstable; urgency=medium
+
+  * Fix "fails to upgrade from 'wheezy' - trying to overwrite
+    /usr/share/man/man8/rpcinfo.8.gz"
+    Depend on libc-bin (>= 2.16)
+    Closes: #734903
+  * Fix LSB initscript runlevels
+    Patch by Roger Leigh
+    Closes: #739053
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sun, 16 Feb 2014 11:19:02 +1100
+
+rpcbind (0.2.1-2) unstable; urgency=low
+
+  * Pass "--with-rpcuser=root" to configure
+    Closes: #733742
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 01 Jan 2014 11:54:21 +1100
+
+rpcbind (0.2.1-1) unstable; urgency=low
+
+  * New upstream version 0.2.1
+    - Run in no fork mode
+      Closes: #648225
+  * Merged upstream:
+    01-usage-fix.patch
+    Update:
+    02-manpages.patch
+    03-563971-warmstart-error-msg.patch
+  * Standards version is 3.9.5
+  * Update uploaders list
+    Closes: #723601
+  * Init script: do not print disruptive text
+    Patch by Mats Erik Andersson
+    Closes: #721448
+  * Build-depend on pkg-config
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Tue, 31 Dec 2013 10:27:14 +1100
+
+rpcbind (0.2.0-8.2) unstable; urgency=low
+
+  * Fix an error in the Ubuntu compatibility of the upstart job regarding
+    initctl emit commands.  Closes: #719357.
+
+ -- Steve Langasek <vorlon@debian.org>  Sat, 31 Aug 2013 19:47:34 +0000
+
+rpcbind (0.2.0-8.1) unstable; urgency=low
+
+   * Non-maintainer upload, approved by Luk Claes.
+   * Convert rpcbind to Upstart.  Closes: #719357.
+   * Fix to look directly in /run instead of via the /var/run symlink.
+   * Adjust init script to start rpcbind only in rcS, not to try to start it
+     again in runlevels [2345]: the service should always start reliably in
+     rcS, with no reason to ever restart it later.  In practice, insserv
+     already ignores the request to run the script twice (considering it
+     "done" already after leaving runlevel S), so this is merely correcting
+     the documentation of the current behavior.  Closes: #623377.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 12 Aug 2013 18:11:48 +0200
+
+rpcbind (0.2.0-8) unstable; urgency=low
+
+  * Relabel the files if SE Linux is active
+    Patch by Russell Coker
+    Closes: #658369
+  * Enable hardened build flags
+  * DH compatibility level is 9
+  * Standards version is 3.9.3
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 16 Jun 2012 00:02:37 +1000
+
+rpcbind (0.2.0-7) unstable; urgency=low
+
+  [ Luca Capello ]
+  * debian/control:
+    + Depends: on initscripts (>= 2.88dsf-13.3) for /run transition.
+  * debian/init.d:
+    + STATEDIR is now on /run.
+    + add PIDFILE variable.
+    + migrate to /run/sendsigs.omit.d/ creating the PIDFILE in /run
+      and symlinking it (Closes: #633035).
+    + remove PIDFILE on stop.
+  * debian/postinst:
+    + move /lib/init/rw/sendsigs.omit.d/rpcbind to /run/rpcbind.pid
+      and symlink it to /run/sendsigs.omit.d/rpcbind.
+  * debian/postrm:
+    + remove files in /run, not /var/run.
+  * debian/rules:
+    + use /run/rpcbind for --with-statedir.
+
+  [ Anibal Monsalve Salazar ]
+  * Bust rpcbind startup annoying messages
+    Patch by Steven Hudson
+    Closes: 620800
+  * Standars-Version is 3.9.2
+  * Fix debian-rules-missing-recommended-target
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 10 Dec 2011 11:36:35 +1100
+
+rpcbind (0.2.0-6) unstable; urgency=medium
+
+  * Depend on fixed insserv (or use file-rc). Closes: #618881
+
+ -- Luk Claes <luk@debian.org>  Sat, 19 Mar 2011 15:57:22 +0100
+
+rpcbind (0.2.0-5) unstable; urgency=low
+
+  * Add insserv.conf.d file to provide virtual $portmap facility.
+    Closes: #565201,#591338
+  * Avoid rpcbind getting killed too early when shutting down.
+    Closes: #593164
+  * Also create rc*.d links for [2-5]. Closes: #594608
+  * Minor improvements of init script. Closes: #589486
+  * Fix FTBFS on kFreeBSD. Closes: #610718
+
+ -- Luk Claes <luk@debian.org>  Sat, 12 Mar 2011 17:53:51 +0100
+
+rpcbind (0.2.0-4.1) unstable; urgency=high
+
+  * Non-maintainer upload by the security team.
+  * CVE-2010-2061: Store state files in /var/run/rpcbind instead of /tmp.
+    Closes: #583435
+
+ -- Stefan Fritsch <sf@debian.org>  Sat, 17 Jul 2010 21:47:56 +0200
+
+rpcbind (0.2.0-4) unstable; urgency=low
+
+  * -w is the default option
+  * Pass the -w option
+    Closes: 563970
+  * Enable warm starts
+    Add 03-563971-warmstart-error-msg.patch
+    Closes: 563971
+  * Enable host name checking
+    Build-depend on libwrap0-dev
+  * Provide portmap
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Fri, 08 Jan 2010 10:13:54 +1100
+
+rpcbind (0.2.0-3) unstable; urgency=low
+
+  * Add 01-usage-fix.patch from redhat
+  * Add init script
+    Conflict with portmap
+    Depend on lsb-base (>= 3.2-14)
+    Closes: 563053
+  * Don't rename rpcinfo
+  * Put rpcbind in /sbin and rpcinfo in /usr/sbin
+  * Rename rpcinfo.8 as rpcinfo.7
+  * Add 02-manpages.patch
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 06 Jan 2010 15:37:32 +1100
+
+rpcbind (0.2.0-2) unstable; urgency=low
+
+  * Don't overwrite files from libc{-bin,N}
+    Rename rpcinfo as rpcbindinfo and rpcinfo.8 as rpcbindinfo.8
+    Patch by Ivan Shmakov
+    Closes: 544567
+  * Add debian/watch
+  * Debian source format is 3.0 (quilt)
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sun, 27 Dec 2009 21:39:02 +1100
+
+rpcbind (0.2.0-1) unstable; urgency=low
+
+  * Initial release
+    Closes: #542791
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Fri, 21 Aug 2009 18:51:29 +1000

@@ -1,0 +1,118 @@
+Description: Add command line option to enable remote calls at runtime instead build time
+Author: Josue Ortega <josue@debian.org>
+Last-Update: 2019-09-17
+
+
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -29,10 +29,6 @@
+ AM_CPPFLAGS +=	-DLIBWRAP
+ endif
+ 
+-if RMTCALLS
+-AM_CPPFLAGS +=	-DRMTCALLS
+-endif
+-
+ bin_PROGRAMS = rpcinfo
+ sbin_PROGRAMS = rpcbind
+ 
+--- a/src/rpcbind.c
++++ b/src/rpcbind.c
+@@ -87,6 +87,7 @@
+ int doabort = 0;	/* When debugging, do an abort on errors */
+ int dofork = 1;		/* fork? */
+ int createdsocket = 0;  /* Did I create the socket or systemd did it for me? */
++int rmtcalls = 0; /* Remote calls */
+ 
+ rpcblist_ptr list_rbl;	/* A list of version 3/4 rpcbind services */
+ 
+@@ -795,12 +796,12 @@
+ #endif
+ 
+ 
+-#ifdef RMTCALLS
++    if (rmtcalls) {
+ 	/*
+ 	 * rmtcall only supported on CLTS transports for now.
+ 	 */
+-	if (nconf->nc_semantics == NC_TPI_CLTS) {
+-		status = create_rmtcall_fd(nconf);
++	    if (nconf->nc_semantics == NC_TPI_CLTS) {
++		    status = create_rmtcall_fd(nconf);
+ #ifdef RPCBIND_DEBUG
+ 		if (debugging) {
+ 			if (status < 0) {
+@@ -813,8 +814,8 @@
+ 			}
+ 		}
+ #endif
+-	}
+-#endif
++	   }
++    }
+ 
+ 	if (res != NULL)
+ 		freeaddrinfo(res);
+@@ -884,7 +885,7 @@
+ {
+ 	int c;
+ 	oldstyle_local = 1;
+-	while ((c = getopt(argc, argv, "adh:ilswf")) != -1) {
++	while ((c = getopt(argc, argv, "adh:ilswfr")) != -1) {
+ 		switch (c) {
+ 		case 'a':
+ 			doabort = 1;	/* when debugging, do an abort on */
+@@ -914,13 +915,16 @@
+ 		case 'f':
+ 			dofork = 0;
+ 			break;
++		case 'r':
++            rmtcalls = 1;
++			break;
+ #ifdef WARMSTART
+ 		case 'w':
+ 			warmstart = 1;
+ 			break;
+ #endif
+ 		default:	/* error */
+-			fprintf(stderr,	"usage: rpcbind [-adhilswf]\n");
++			fprintf(stderr,	"usage: rpcbind [-adhilswfr]\n");
+ 			exit (1);
+ 		}
+ 	}
+--- a/man/rpcbind.8
++++ b/man/rpcbind.8
+@@ -11,7 +11,7 @@
+ .Nd universal addresses to RPC program number mapper
+ .Sh SYNOPSIS
+ .Nm
+-.Op Fl adhiLls
++.Op Fl adhiLlsr
+ .Sh DESCRIPTION
+ The
+ .Nm
+@@ -149,6 +149,11 @@
+ starts up. The state file is created when
+ .Nm
+ terminates.
++.It Fl r
++Turn on remote calls. Cause
++.Nm
++to open up random listening ports. Note that rpcinfo need this feature turned on
++for work properly. (This flag is a Debian extension.)
+ .El
+ .Sh NOTES
+ All RPC servers must be restarted if
+--- a/configure.ac
++++ b/configure.ac
+@@ -21,10 +21,6 @@
+   AS_HELP_STRING([--enable-warmstarts], [Enables Warm Starts @<:@default=no@:>@]))
+ AM_CONDITIONAL(WARMSTART, test x$enable_warmstarts = xyes)
+ 
+-AC_ARG_ENABLE([rmtcalls],
+-  AS_HELP_STRING([--enable-rmtcalls], [Enables Remote Calls @<:@default=no@:>@]))
+-AM_CONDITIONAL(RMTCALLS, test x$enable_rmtcalls = xyes)
+-
+ AC_ARG_WITH([statedir],
+   AS_HELP_STRING([--with-statedir=ARG], [use ARG as state dir @<:@default=/var/run/rpcbind@:>@])
+   ,, [with_statedir=/var/run/rpcbind])

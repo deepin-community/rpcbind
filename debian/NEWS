@@ -1,0 +1,20 @@
+rpcbind (1.2.5-8) unstable; urgency=medium
+
+  Since version 1.2.5 upstream has turned off the remote calls functionality
+  in order to improve security. This can be turned on at build time.
+  This functionality caused rpcbind to open up random listening ports. This
+  change broke up broadcasts requests to rpcbind making systems depending
+  on this feature unusable, e.g. NIS systems.
+  
+  This release accepts the new command line parameter 'r' to turn on the
+  remote calls functionality when needed.
+
+ -- Josue Ortega <josue@debian.org>  Tue, 17 Sep 2019 19:08:34 -0600
+
+rpcbind (1.2.5-4) unstable; urgency=medium
+
+  rpcbind now ships a default configuration file under '/etc/default'. If
+  /etc/rpcbind.conf exists the default configuration file values will
+   be overridden.
+
+ -- Josue Ortega <josue@debian.org>  Sat, 27 Jul 2019 15:10:35 -0300

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = configure ] ; then
+	# run daemon as non-root (see #852066)
+	adduser --force-badname --system --quiet --home /run/rpcbind --no-create-home _rpc
+	if dpkg --compare-versions "$2" lt "1.2.5-0.1~"; then
+		if [ -d /run/rpcbind ]; then
+			chown _rpc:root /run/rpcbind
+			[ -f /run/rpcbind/portmap.xdr ] && chown _rpc:root /run/rpcbind/portmap.xdr
+			[ -f /run/rpcbind/rpcbind.xdr ] && chown _rpc:root /run/rpcbind/rpcbind.xdr
+		fi
+	fi
+fi
+
+#DEBHELPER#

@@ -1,0 +1,6 @@
+00-rmt-calls.patch
+00-default-config-file-man.patch
+02-manpages.patch
+03-563971-warmstart-error-msg.patch
+04-610718-non-linux.patch
+run-migration

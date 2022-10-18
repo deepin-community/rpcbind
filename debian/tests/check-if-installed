@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ ! -f "/sbin/rpcbind" ]; then
+    >&2 echo "rpcbind is not installed"
+fi

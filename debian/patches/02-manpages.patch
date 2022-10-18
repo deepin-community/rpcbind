@@ -1,0 +1,22 @@
+rpcinfo.8 renamed as rpcinfo.7
+
+--- a/man/rpcbind.8
++++ b/man/rpcbind.8
+@@ -168,5 +168,4 @@
+ .Sh SEE ALSO
+ .Xr rpcinfo 8
+ .Sh LINUX PORT
+-.Bl Aurelien Charbon <aurelien.charbon@bull.net>
+-.El
++Aurelien Charbon <aurelien.charbon@bull.net>
+--- a/man/rpcinfo.8
++++ b/man/rpcinfo.8
+@@ -303,7 +303,7 @@
+ 	example$ rpcinfo -s klaxon
+ .Ed
+ .Bl -column "program" "w,x,y,z" "local,tcp,udp,tcp6,udp6" "nlockmgr" "super-user"
+-.It program Ta version(s) Ta netid(s) Ta service Ta owner
++.It program Ta version Ta netid Ta service Ta owner
+ .It 100000 Ta 2,3,4 Ta local,tcp,udp,tcp6,udp6 Ta rpcbind Ta super-user
+ .It 100008 Ta 1 Ta udp,tcp,udp6,tcp6 Ta walld Ta super-user
+ .It 100002 Ta 2,1 Ta udp,udp6 Ta rusersd Ta super-user

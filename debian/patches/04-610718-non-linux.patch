@@ -1,0 +1,11 @@
+--- a/src/security.c
++++ b/src/security.c
+@@ -63,7 +63,7 @@
+ #ifndef PORTMAP_LOG_SEVERITY
+ # define PORTMAP_LOG_SEVERITY LOG_INFO
+ #endif
+-#ifdef __linux__
++#if defined(INET6) && !defined(IPV6PORT_RESERVED)
+  #define IPV6PORT_RESERVED IPPORT_RESERVED
+ #endif
+ 
