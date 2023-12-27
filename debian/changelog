@@ -1,3 +1,46 @@
+rpcbind (1.2.6-7) unstable; urgency=medium
+
+  * Install systemd units only once. Thanks to Helmut Grohne
+   <helmutg@debian.org> for the patch. (Closes: #1054483)
+
+  [Debian Janitor]
+  * Remove 3 obsolete maintscript entries in 1 files.
+  * Set upstream metadata fields: Archive, Bug-Database.
+  * Drop dependency on obsolete package lsb-base.
+  * debian/copyright: Update debian/* copyright holder year.
+
+ -- Josue Ortega <josue@debian.org>  Mon, 06 Nov 2023 17:38:53 -0600
+
+rpcbind (1.2.6-6) unstable; urgency=medium
+
+  * Add missing postinst script creating _rpc user (Closes: #1016064)
+
+ -- Josue Ortega <josue@debian.org>  Wed, 27 Jul 2022 03:20:27 -0600
+
+rpcbind (1.2.6-5) unstable; urgency=medium
+
+  * debian/init.d: Remove init level 1 from Default-Stop
+    (Closes: #1012444).
+
+ -- Josue Ortega <josue@debian.org>  Wed, 20 Jul 2022 10:57:14 +0200
+
+rpcbind (1.2.6-4) unstable; urgency=medium
+
+  * Re-licence debian/patches/* to be under BSD-3-Clause license
+    (Closes: #996883).
+  * Remove obsolete debian/postinst file.
+  * Bump Standards-Version to 4.6.1. No chages required.
+
+ -- Josue Ortega <josue@debian.org>  Tue, 19 Jul 2022 12:29:51 +0200
+
+rpcbind (1.2.6-3) unstable; urgency=medium
+
+  * Rebuild with debhelper >= 13.5.2. See #993316 for more information.
+  * Bump Standards-Version to 4.6.0. No changes required.
+  * debian/copyright: Update debian/* copyright year.
+
+ -- Josue Ortega <josue@debian.org>  Fri, 08 Apr 2022 08:48:55 -0600
+
 rpcbind (1.2.6-2) unstable; urgency=medium
 
   * Upload to unstable
