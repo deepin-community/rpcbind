@@ -7,7 +7,7 @@
 # Required-Start:    $network $local_fs
 # Required-Stop:     $network $local_fs
 # Default-Start:     S
-# Default-Stop:      0 1 6
+# Default-Stop:      0 6
 # Short-Description: RPC portmapper replacement
 # Description:       rpcbind is a server that converts RPC (Remote
 #                    Procedure Call) program numbers into DARPA

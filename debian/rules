@@ -7,7 +7,8 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 ifeq (linux,$(DEB_HOST_ARCH_OS))
-	CONFIGURE_EXTRA_FLAGS += --with-systemdsystemunitdir=/lib/systemd/system
+	# Setting no would also disable support in the rpcbind executable.
+	CONFIGURE_EXTRA_FLAGS += --with-systemdsystemunitdir=/unused
 else
 	CONFIGURE_EXTRA_FLAGS += --with-systemdsystemunitdir=no
 endif
@@ -18,6 +19,9 @@ endif
 override_dh_auto_configure:
 	dh_auto_configure -- --sbindir=/sbin --enable-warmstarts --enable-libwrap --with-statedir=/run/rpcbind --with-rpcuser=_rpc --enable-debug $(CONFIGURE_EXTRA_FLAGS)
 
+execute_after_dh_auto_install:
+	rm -Rf debian/rpcbind/unused
+
 override_dh_installinit:
 	dh_installinit
 	install -d debian/rpcbind/etc/insserv.conf.d
@@ -27,7 +31,6 @@ override_dh_installsystemd:
 	dh_installsystemd --no-restart-after-upgrade
 
 ifeq (linux,$(DEB_HOST_ARCH_OS))
-override_dh_link:
-	dh_link lib/systemd/system/rpcbind.service lib/systemd/system/portmap.service
-	dh_link
+execute_before_dh_link:
+	dh_link $$(test -d debian/rpcbind/usr/lib/systemd && echo usr/)lib/systemd/system/rpcbind.service $$(test -d debian/rpcbind/usr/lib/systemd && echo usr/)lib/systemd/system/portmap.service
 endif
